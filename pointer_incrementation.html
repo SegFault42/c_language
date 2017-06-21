@@ -1,0 +1,79 @@
+<p>Incrementaion de pointeur.</p>
+<p>Prenons en exemple ce main:</p>
+<script src="https://gist.github.com/SegFault42/59b7abbe5cd7f3a91ee579e80ecc206d.js"></script>
+<p>J'ai allouer 100 octets avec malloc.</p>
+<p></p>
+<p>A l'octet 0 j'ai assigner la valeur 'a' puis j'ai incrementer mon pointeur de 10, et j'ai assigner la valeur b.</p>
+<p></p>
+<p>pour incrementer notre pointeur, nous avons juste a l'incrementer comme si nous incrementons un index.</p>
+<p></p>
+<p>a la ligne 12, alloc pointe sue l'adresse : 0x7fc519c03120</p>
+<p></p>
+<p>j'assigne la valeur 'a' a cette adresse. (ligne 12)</p>
+<p></p>
+<p>0x7fc519c03120 = 'a'</p>
+<p></p>
+<p>J'imcremente ensuite alloc de 10 (ligne 14).</p>
+<p></p>
+<p>Alloc pointe maintenant 10 octets plus loin : 0x7fc519c0312a</p>
+<p></p>
+<p>Si on fait le calcul :</p>
+<p></p>
+<p>Hexadecimal :</p>
+<p>0x7fc519c0312a - 0x7fc519c03120 = 0xa</p>
+<p></p>
+<p>Decimal</p>
+<p>140484517310762 - 140484517310752 = 10</p>
+<p></p>
+<p>J'assigne la valeur 'b' a l'octet 0 (qui est en realite l'octet 10 devenue l'octet 0 du a notre incrementation)</p>
+<p></p>
+<p>Output de ce main :</p>
+<p></p>
+<p></p>
+<p>Addresse alloc (before incrementation) = 0x7fc519c03120</p>
+<p>Addresse alloc (after incrementation)  = 0x7fc519c0312a</p>
+<p>Value of alloc[0]   = b</p>
+<p>Value og alloc[-10] = a</p>
+<p></p>
+<p></p>
+<p>On voit clairement que le pointeur a ete incrementer comme il faut.</p>
+<p></p>
+<p>Voyons maintenant le pourquoi de cette article.</p>
+<p></p>
+<p>Que ce passe t-il si je fais la meme chose avec un type sur plusieurs octets ?</p>
+<p></p>
+<script src="https://gist.github.com/SegFault42/10b99d6ae315b11f7736925c5d84de48.js"></script>
+<p></p>
+<p>Output de ce main :</p>
+<p></p>
+<p></p>
+<p>24</p>
+<p>Addresse alloc (before incrementation) = 0x7ffa00e00140</p>
+<p>Addresse alloc (after incrementation)  = 0x7ffa00e00380</p>
+<p>Value of alloc->var_a (before incrementation)   = 1000</p>
+<p>Value of alloc->var_a (after incrementation)    = 2000</p>
+<p></p>
+<p></p>
+<p>J'ai incrementer de sizeof(t_struct) (24 octets)</p>
+<p></p>
+<p>Je me retrouve non pas a l'adresse actuelle + 24 mais a ladresse actuelle + (24 * 24) octets</p>
+<p></p>
+<p>J'ai fait une incrementation de 24 (pas 24 octets)</p>
+<p></p>
+<p>Pour incrementer de 24 octets j'aurais du incrementer de 1 (alloc++).</p>
+<p></p>
+<p>alloc++ incremente en fonction du type de variable.</p>
+<p></p>
+<p>alloc++ = alloc += 24 octets</p>
+<p></p>
+<p>Output avec un alloc++ :</p>
+<p></p>
+<p></p>
+<p>24</p>
+<p>Addresse alloc (before incrementation) = 0x7ff7b1800600</p>
+<p>Addresse alloc (after incrementation)  = 0x7ff7b1800618</p>
+Value of alloc->var_a (before incrementation)   = 1000</p>
+Value of alloc->var_a (after incrementation)    = 2000</p>
+<p></p>
+</p>
+<p>Nous avons bien un decallage de 24 octets.</p>
