@@ -1,4 +1,4 @@
-## Operateur bit a bit
+# Operateur bit a bit
 
 Il existe six operateurs pour manipuler les bit en C:
 
@@ -12,6 +12,8 @@ Il existe six operateurs pour manipuler les bit en C:
 ```
 
 Avant d'expliquer comment utilser ces operateurs, il faut savoir comment fonctionne les bits.
+
+## 1) Representation en binaire 
 
 Prenons un unsigned char pour exemple
 
@@ -69,3 +71,63 @@ a = 236
 
 128 + 64 + 32 + 0 + 8 + 4 + 0 + 0 = 236
 ```
+
+## 2) Manipuler les bits
+
+#### a) L'operateur AND '&'
+
+Prenons 2 variable de type unsigned char :
+
+```
+unsigned char a = 236;
+unsigned char b = 100;
+
+en binaire :
+
+a = 1110 1100
+b = 0110 0100
+```
+
+L'operateur & (& binaire) met le bit a 1 si les bits correspondant son tout les deux a 1 sinon le bit est a 0
+
+si nous faisont :
+
+```
+unsigned char c = a & b;
+```
+
+c sera egale a 01100100
+
+resultat du programme bitwise_AND.c
+
+```
+a = 236
+b = 100
+c = 0
+Avant operation:
+a = 11101100
+b = 01100100
+c = 00000000
+Apres operation:
+a = 11101100
+b = 01100100
+c = 01100100
+```
+```
+11101100
+||||||||
+01100100
+||||||||
+vvvvvvvv
+01100100
+```
+
+
+
+
+
+
+
+
+
+
